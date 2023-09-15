@@ -1,9 +1,9 @@
 import mysql from "serverless-mysql"
-mysql({
+export const conn = mysql({
     config: {
         host: 'localhost',
         user: 'root',
-        password: 'uy%XH92:e/9_Pm3B',
+        password: '123456789',
         port: 3306,
         database: 'nextmysqlcrud'
     }
