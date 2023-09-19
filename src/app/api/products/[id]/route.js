@@ -70,9 +70,10 @@ export async function PUT(request, { params }) {
       );
     }
 
-    const updatedProduct = await conn.query("SELECT * FROM product WHERE id = ?", [
-      params.id,
-    ]);
+    const updatedProduct = await conn.query(
+      "SELECT * FROM product WHERE id = ?",
+      [params.id]
+    );
 
     return NextResponse.json(updatedProduct[0]);
   } catch (error) {
