@@ -1,8 +1,8 @@
 "use client";
 
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRouter,useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 function ProductForm() {
   const [product, setProduct] = useState({
@@ -12,6 +12,22 @@ function ProductForm() {
   });
   const form = useRef(null);
   const router = useRouter();
+  const params = useParams();
+
+  useEffect(()=> {
+
+    if(params.id){
+      axios.get("/api/products/" + params.id)
+      .then(res =>(
+        setProduct({
+          name:res.data.name,
+          price:res.data.price,
+          description:res.data.description
+        })
+      ))
+    }
+
+  },[])
   
   const handleChange = (e) => {
     setProduct({
@@ -21,9 +37,20 @@ function ProductForm() {
 
   const  handleSubmit  = async (e) => {
     e.preventDefault();
-    const res = await axios.post("/api/products",product);
-    console.log(res);
-    form.current.reset()
+
+    if(!params.id){
+      const res = await axios.post("/api/products",product);
+      console.log(res);
+      form.current.reset()
+    }else{
+      const res = await axios.put("/api/products/"+params.id,product);
+      console.log(res)
+      form.current.reset()
+    }
+    
+    
+    
+    router.refresh()
     router.push("/products")
 
   
@@ -43,6 +70,7 @@ function ProductForm() {
         type="text"
         placeholder="name"
         onChange={handleChange}
+        value={product.name}
         className="shadow appearance-none border rounded w-full py-2 px-3"
       />
       <label
@@ -56,6 +84,7 @@ function ProductForm() {
         type="text"
         placeholder="00.00"
         onChange={handleChange}
+        value={product.price}
         className="shadow appearance-none border rounded w-full py-2 px-3"
       />
       <label
@@ -68,6 +97,7 @@ function ProductForm() {
         name="description"
         placeholder="Description"
         onChange={handleChange}
+        value={product.description}
         rows="3"
         className="shadow appearance-none border rounded w-full py-2 px-3" 
       />

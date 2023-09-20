@@ -1,4 +1,5 @@
 import ProductCard from "@/components/ProductCard";
+import Buttons from "../Buttons";
 import axios from "axios";
 
 async function LoadProducts(productId) {
@@ -10,7 +11,6 @@ async function LoadProducts(productId) {
 
 async function Product({ params }) {
   const product = await LoadProducts(params.id);
-  console.log(product);
 
   return (
     <section className="flex justify-center">
@@ -18,7 +18,9 @@ async function Product({ params }) {
         <p>Name: {product.name}</p>
         <p>Price:{product.price}</p>
         <p>Description: {product.description}</p>
+        <Buttons productId={params.id}/>
       </div>
+      
     </section>
   );
 }
