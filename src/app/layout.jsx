@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <nav className="h-[5rem]"></nav>
-        <div className="h-[calc(100vh-5rem)] ">{children}</div>
+        <div className="h-[calc(100vh-5rem)] m-auto p-6">{children}</div>
       </body>
     </html>
   );

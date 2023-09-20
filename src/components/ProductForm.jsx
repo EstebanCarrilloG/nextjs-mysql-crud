@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 function ProductForm() {
@@ -10,6 +11,7 @@ function ProductForm() {
     description: "",
   });
   const form = useRef(null);
+  const router = useRouter();
   
   const handleChange = (e) => {
     setProduct({
@@ -17,12 +19,12 @@ function ProductForm() {
     })
   };
 
-  const handleSubmit = (e) => {
+  const  handleSubmit  = async (e) => {
     e.preventDefault();
-    console.log(product)
-    const res = axios.post("/api/products",product);
+    const res = await axios.post("/api/products",product);
     console.log(res);
     form.current.reset()
+    router.push("/products")
 
   
 }

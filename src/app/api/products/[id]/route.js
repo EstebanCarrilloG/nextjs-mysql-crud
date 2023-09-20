@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
         { status: 404 }
       );
     }
-    return NextResponse.json(result);
+    return NextResponse.json(result[0]);
   } catch (error) {
     return NextResponse.json(
       {
